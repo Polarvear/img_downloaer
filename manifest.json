@@ -5,7 +5,12 @@
     "description": "Find all images in the current tab.",
     "permissions": ["activeTab",
                     "tabs",
-                    "downloads"],
+                    "downloads",
+                    "scripting"
+                  ],
+    "host_permissions": [
+      "<all_urls>"
+    ],
     "background": {
       "service_worker": "scripts/background.js"
     },

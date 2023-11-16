@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "Image Finder",
+    "version": "1.0",
+    "description": "Find all images in the current tab.",
+    "permissions": ["activeTab",
+                    "tabs",
+                    "downloads"],
+    "background": {
+      "service_worker": "scripts/background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "images/icon.png"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["scripts/content.js"],
+        "run_at": "document_idle"
+      }
+    ],
+    "icons": {
+      "48": "images/icon.png"
+    }
+  }
+  

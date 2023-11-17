@@ -54,44 +54,67 @@
 //   });
 
 
-
-
+// background.js
 chrome.commands.onCommand.addListener(function (command) {
-  if (command === "fetchTabsInfo") {
-    chrome.tabs.query({}, function (tabs) {
-      tabs.forEach(function (tab) {
-        console.log("Tab ID:", tab.id);
-        console.log("Tab URL:", tab.url);
-        console.log("Tab Title:", tab.title);
-        console.log("-------------");
-      
-        chrome.scripting.executeScript({
-          target: { tabId: tab.id },
-          files: ["scripts/content.js"]
-        });
+    if (command === "fetchTabsInfo") {
+      chrome.action.openPopup({}, function(popup) {
+        // 오류 처리: 팝업을 열 수 없는 경우
+        if (chrome.runtime.lastError) {
+          console.log('팝업을 열 수 없습니다: ', chrome.runtime.lastError.message);
+        }
       });
-    });
-  }
-});
+    }
+  });
+  
+  // 메시지 리스너: 팝업에서 '다운로드' 버튼 클릭을 처리합니다.
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.download === "yes") {
+      // 모든 탭의 이미지 URL을 다운로드 합니다.
+      // 다운로드 로직을 여기에 구현하세요.
+    }
+  });
+
+
+
+
+
+
+
+// chrome.commands.onCommand.addListener(function (command) {
+//   if (command === "fetchTabsInfo") {
+//     chrome.tabs.query({}, function (tabs) {
+//       tabs.forEach(function (tab) {
+//         console.log("Tab ID:", tab.id);
+//         console.log("Tab URL:", tab.url);
+//         console.log("Tab Title:", tab.title);
+//         console.log("-------------");
+      
+//         chrome.scripting.executeScript({
+//           target: { tabId: tab.id },
+//           files: ["scripts/content.js"]
+//         });
+//       });
+//     });
+//   }
+// });
 
 
 // content.js 스크립트에서 보낸 이미지 URL을 받습니다.
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.imageUrls && request.imageUrls.length > 0) {
-    request.imageUrls.forEach((url, index) => {
-      const dateTime = getCurrentDateTime();
-      // 다운로드 기능
-      /*
-      chrome.downloads.download({
-        url: url,
-        filename: `${dateTime}_${index}.jpg`, // 날짜와 시간으로 파일 이름 지정
-        conflictAction: "uniquify",
-      });
-      */
-    });
-  }
-});
-
+// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+//   if (request.imageUrls && request.imageUrls.length > 0) {
+//     request.imageUrls.forEach((url, index) => {
+//       const dateTime = getCurrentDateTime();
+//       // 다운로드 기능
+//       /*
+//       chrome.downloads.download({
+//         url: url,
+//         filename: `${dateTime}_${index}.jpg`, // 날짜와 시간으로 파일 이름 지정
+//         conflictAction: "uniquify",
+//       });
+//       */
+//     });
+//   }
+// });
 
 
 function getCurrentDateTime() {

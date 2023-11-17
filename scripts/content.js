@@ -1,8 +1,8 @@
 // content.js
-window.addEventListener("load", function () {
-  const images = document.querySelectorAll("img");
-  const imageUrls = Array.from(images).map((img) => img.src);
-  // console.log(imageUrls);
+const images = document.querySelectorAll('img');
+const imageUrls = Array.from(images).map(img => img.src);
 
-  chrome.runtime.sendMessage({ imageUrls: imageUrls });
+// 이미지 URL 배열을 백그라운드 스크립트로 전송합니다.
+chrome.runtime.sendMessage({ imageUrls: imageUrls }, function() {
+    console.log(imageUrls);
 });

@@ -2,7 +2,14 @@
     "manifest_version": 3,
     "name": "Image Finder",
     "version": "1.0",
-    "description": "Find all images in the current tab.",
+    "commands": {
+        "fetchTabsInfo": {
+          "suggested_key": {
+            "default": "Alt+Z"
+          },
+          "description": "Fetch information of all open tabs"
+        }
+      },
     "permissions": ["activeTab",
                     "tabs",
                     "downloads",
@@ -22,7 +29,7 @@
       {
         "matches": ["<all_urls>"],
         "js": ["scripts/content.js"],
-        "run_at": "document_idle"
+        "run_at": "document_end"
       }
     ],
     "icons": {
